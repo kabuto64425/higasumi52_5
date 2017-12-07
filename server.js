@@ -1,4 +1,4 @@
-var express = require("express");
+﻿var express = require("express");
 var app = express();
 var cfenv = require("cfenv");
 var bodyParser = require('body-parser')
@@ -101,8 +101,13 @@ if (appEnv.services['cloudantNoSQLDB'] || appEnv.getService(/cloudant/)) {
 }
 
 //serve static file (index.html, images, css)
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/views'));
-
+app.get('/', function(req, res) {
+  // index.ejsの拡張子は省略可能
+  res.render('index');
+});
 
 
 var port = process.env.PORT || 3000
